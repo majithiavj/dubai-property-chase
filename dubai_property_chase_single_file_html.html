@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dubai Property Chase</title>
+  <style>
+    :root{--bg:#0b1220;--accent:#f59e0b;--muted:#9aa4b2}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{background:linear-gradient(180deg,#071126  0%, #0b1b2b 100%);color:#e6eef8;display:flex;align-items:center;justify-content:center}
+    .game-wrap{width:900px;max-width:98%;background:linear-gradient(180deg,#061428 0%, rgba(6,20,40,0.8) 70%);border-radius:12px;padding:16px;box-shadow:0 8px 30px rgba(3,6,23,0.6);position:relative}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    header h1{font-size:20px;margin:0}
+    header .controls{display:flex;gap:8px;align-items:center}
+    button{background:var(--accent);border:none;color:#031025;padding:8px 12px;border-radius:8px;font-weight:600;cursor:pointer;text-decoration:none}
+    .canvas-wrap{position:relative;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);height:420px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.04)}
+    #gameCanvas{display:block;background:transparent;}
+    .hud{position:absolute;left:12px;top:12px;display:flex;gap:8px;align-items:center}
+    .chip{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:10px;font-size:13px;color:var(--muted)}
+    .summary{padding:12px;margin-top:12px;background:rgba(255,255,255,0.02);border-radius:8px}
+    .summary h3{margin:0 0 8px 0}
+    .form-row{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+    input[type=text],input[type=tel],select{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#e6eef8;flex:1}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#e6eef8}
+    footer{margin-top:10px;font-size:13px;color:var(--muted);text-align:center}
+    .small{font-size:13px;color:var(--muted)}
+    .contact-banner{background:rgba(245,158,11,0.15);padding:6px 10px;border-radius:8px;font-size:13px;color:#fbbf24;font-weight:600;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+    .contact-banner a{color:#fbbf24;text-decoration:none;font-weight:700;padding:4px 8px;border:1px solid #fbbf24;border-radius:6px;}
+    .floating-contacts{position:fixed;bottom:12px;right:12px;z-index:999;background:rgba(11,18,32,0.9);padding:10px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+    .floating-contacts h4{margin:0 0 6px 0;font-size:14px;color:#fbbf24;text-align:center}
+    .floating-contacts .contact-links{display:flex;flex-direction:column;gap:6px}
+  </style>
+</head>
+<body>
+  <div class="game-wrap">
+    <header>
+      <h1>Dubai Property Chase — Broker Edition</h1>
+      <div class="controls">
+        <div class="chip" id="scoreChip">Score: 0</div>
+        <button id="startBtn">Start Game</button>
+        <button id="restartBtn" class="btn-ghost">Restart</button>
+      </div>
+    </header>
+
+    <div class="canvas-wrap">
+      <canvas id="gameCanvas" width="860" height="420"></canvas>
+      <div class="hud" style="right:12px;left:auto;top:12px">
+        <div class="chip" id="progressChip">Choices: 0/4</div>
+      </div>
+    </div>
+
+    <div class="summary" id="summaryBox" style="display:none">
+      <h3>Summary</h3>
+      <div id="summaryContent" class="small"></div>
+
+      <div style="margin-top:10px">
+        <label class="small">Name</label>
+        <input type="text" id="playerName" placeholder="Your name" />
+        <label class="small">WhatsApp / Phone</label>
+        <input type="tel" id="playerPhone" placeholder="e.g. +97150xxxxxxx" />
+      </div>
+
+      <div class="form-row">
+        <button id="downloadBtn">Download CSV</button>
+        <button id="copyBtn" class="btn-ghost">Copy JSON</button>
+        <button id="sendBtn">Send to webhook</button>
+      </div>
+
+      <div id="sendStatus" class="small" style="margin-top:8px"></div>
+
+      <div class="contact-banner" style="position:static;margin-top:10px;text-align:center;justify-content:center">
+        Viral - <a href="tel:+971586700115">Call</a> | <a href="https://wa.me/971586700115" target="_blank">WhatsApp</a>
+        &nbsp;||&nbsp;
+        Shriti - <a href="tel:+971557670268">Call</a> | <a href="https://wa.me/971557670268" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+
+    <footer>
+      Prototype — you can host this single file on any static host. Replace assets to brand it.<br/>
+      Viral - <a href="tel:+971586700115">Call</a> | <a href="https://wa.me/971586700115" target="_blank">WhatsApp</a>
+      &nbsp;||&nbsp;
+      Shriti - <a href="tel:+971557670268">Call</a> | <a href="https://wa.me/971557670268" target="_blank">WhatsApp</a>
+    </footer>
+  </div>
+
+  <!-- Floating Contact Widget -->
+  <div class="floating-contacts">
+    <h4>Contact Us</h4>
+    <div class="contact-links">
+      <div>
+        Viral - <a href="tel:+971586700115">Call</a> | <a href="https://wa.me/971586700115" target="_blank">WhatsApp</a>
+      </div>
+      <div>
+        Shriti - <a href="tel:+971557670268">Call</a> | <a href="https://wa.me/971557670268" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // existing JS remains unchanged ...
+  </script>
+</body>
+</html>
